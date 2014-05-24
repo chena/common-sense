@@ -8,23 +8,24 @@ returns a knowledge base object with the given set of rules
 def gen_kb(rset):
    rules = list(rset)
    kb = PropKB()
-   #add each rule to the knowledge base
+   # add each rule to the knowledge base
    for r in rules: kb.tell(r)
    return kb
 
 """
-Consistency test: while the kb is nonempty, assign rank 0 to all rules that can be tolerated by all other rules in the kb. Remove these rules, increment rank and repeat the process.
+Consistency test: while the kb is nonempty, assign rank 0 to all rules that can be tolerated by all other rules in the kb. 
+Remove these rules, increment rank and repeat the process.
 """
 def consistency(rset):
    rules = list(rset)
    kb = gen_kb(rset)
-   #dictionary of rule mapping to its rank
+   # dictionary of rule mapping to its rank
    kb_dict = defaultdict(int)
    consistent = True
-   #initialize the rank
+   # initialize the rank
    rank = 0
 
-   #determine if each rule can be tolerated by all other rules in the KB
+   # determine if each rule can be tolerated by all other rules in the KB
    while len(kb.clauses) > 0 and consistent:
       bclause = Expr('&', *kb.clauses)
       rlist = []
@@ -34,9 +35,9 @@ def consistency(rset):
          sent = lhs & rhs & bclause
          res = dpll_satisfiable(sent)
          if res:
-	    conset = conjuncts(to_cnf(r))
-	    rlist += conset
-	    ritems.append(r)
+            conset = conjuncts(to_cnf(r))
+            rlist += conset
+            ritems.append(r)
       #assign ranks to rules that are tolareted and remove them from the KB
       if rlist:
          for r in ritems: rules.remove(r)

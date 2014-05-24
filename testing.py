@@ -4,7 +4,7 @@ from ranking import *
 RULES = []
 
 #from system Z paper
-
+"""
 p = Expr('Penguin')
 b = Expr('Bird')
 a = Expr('Arctic')
@@ -13,19 +13,19 @@ w = Expr('Wings')
 m = Expr('Mobile')
 #added
 c = Expr('Canadian') 
-r = Expr('Red') #irrelevant feature not appearing in RULES
+r = Expr('Red') # irrelevant feature not appearing in RULES
 
-RULES.append(p >> b) #penguins are birds
-RULES.append(b >> f) #birds fly
-RULES.append(p >> ~f)#penguins do not fly
-RULES.append(p >> a) #penguing live in the arctic
-RULES.append(b >> w) #birds have wings
-RULES.append(f >> m) #animals that fly are mobile
-#added
-RULES.append(c >> f) #Canadian animals usually fly
+RULES.append(p >> b) # penguins are birds
+RULES.append(b >> f) # birds fly
+RULES.append(p >> ~f)# penguins do not fly
+RULES.append(p >> a) # penguing live in the arctic
+RULES.append(b >> w) # birds have wings
+RULES.append(f >> m) # animals that fly are mobile
+# added
+RULES.append(c >> f) # Canadian animals usually fly
+"""
 
-
-#for B1
+# for B1
 """
 p = Expr('Penguin')
 b = Expr('Bird')
@@ -33,7 +33,7 @@ a = Expr('Animal')
 f = Expr('Fly')
 c = Expr('Crane')
 r = Expr('Rabbit')
-#add for B2
+# add for B2
 t = Expr('Bat')
 
 RULES.append(b >> f) #birds fly
@@ -49,25 +49,25 @@ RULES.append(t >> a) #bats are animals
 RULES.append(t >> f) #bats normally fly
 """
 
-#for B3
+# for B3
 """
 q = Expr('Quakers')
 p = Expr('Pacifist')
 r = Expr('Republican')
 a = Expr('Alice')
 b = Expr('Ben')
-#add for B4
+# add for B4
 h = Expr('Hawks')
 v = Expr('Political Active')
 c = Expr('Cindy')
 
 RULES.append(q >> p) #quakers are normally pacifists
-#RULES.append(r >> ~p) #republicans are normally not pacifists #exclude for B4
+# RULES.append(r >> ~p) #republicans are normally not pacifists #exclude for B4
 RULES.append(a >> q)#Alice is quaker
 RULES.append(a >> ~r) #Alice is not republican
 RULES.append(b >> r) #Ben is republican
 RULES.append(b >> ~q) #Ben is not quaker
-#add for B4
+# add for B4
 RULES.append(r >> h) #republicans are normally hawks
 RULES.append(p >> v) #pacifists are normally politically active
 RULES.append(h >> v) #hawks are normally politically active
@@ -75,7 +75,7 @@ RULES.append(p >> ~h) #pacifists are not hawks
 RULES.append(c >> h) #Cindy is hawk
 """
 
-#for A1 - A7
+# for A1 - A7
 """
 a = Expr('A')
 b = Expr('B')
@@ -95,8 +95,8 @@ RULES.append(a >> ~t) #A is not on the table
 RULES.append(c >> h) #C is heavy
 """
 
-#bear
-"""
+# bear
+
 b = Expr('Bear')
 d = Expr('Dangerous')
 t = Expr('Teddies')
@@ -108,7 +108,7 @@ RULES.append(t >> b) #teddies are bear
 RULES.append(t >> ~d) #teddies are not dangerous
 RULES.append(b >> h) #bears like honey
 RULES.append((t & f) >> d) #fat teddies are typically dangerous
-"""
+
 
 #####################   QUERYING   #####################
 #queries
@@ -116,8 +116,8 @@ QUERIES = []
 SENTS = []
 
 #from paper
-
-#0-entailed
+"""
+# 0-entailed
 QUERIES.append((b & p) >> f)
 SENTS.append('do penguin-birds fly?')
 QUERIES.append(f >> p)
@@ -127,7 +127,7 @@ SENTS.append('are birds typically penguins?')
 QUERIES.append((p & a) >> b)
 SENTS.append('are penguins that live in the arctic birds?')
 
-#1-entailed
+# 1-entailed
 QUERIES.append(~b >> ~p)
 SENTS.append('are non-bird animals typically not penguins?')
 QUERIES.append(~f >> ~b)
@@ -153,7 +153,7 @@ QUERIES.append(f >> b)
 SENTS.append('are flying animals birds?')
 QUERIES.append((c & p) >> f)
 SENTS.append('do Canadian penguins fly?')
-
+"""
 
 #for B1
 """
@@ -199,14 +199,14 @@ SENTS.append('is C on the table?')
 """
 
 #bear
-"""
+
 QUERIES.append((t & d & ~h) >> b)
 SENTS.append('are dangerous teddies that do not like honey typically bears?')
 QUERIES.append(t >> h)
 SENTS.append('do teddies like honey?')
 QUERIES.append(b >> f)
 SENTS.append('are bears typically fat?')
-"""
+
 
 #ENTAILMENTS
 zero_entail(RULES, QUERIES, SENTS)
