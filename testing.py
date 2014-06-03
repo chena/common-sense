@@ -1,10 +1,11 @@
 from ranking import *
 
+## TODO: abstract and refactor so that each dataset can be independent and pulled easily for testing
+
 ####################   RULES   #####################
 RULES = []
 
 #from system Z paper
-"""
 p = Expr('Penguin')
 b = Expr('Bird')
 a = Expr('Arctic')
@@ -23,7 +24,6 @@ RULES.append(b >> w) # birds have wings
 RULES.append(f >> m) # animals that fly are mobile
 # added
 RULES.append(c >> f) # Canadian animals usually fly
-"""
 
 # for B1
 """
@@ -95,8 +95,8 @@ RULES.append(a >> ~t) #A is not on the table
 RULES.append(c >> h) #C is heavy
 """
 
+"""
 # bear
-
 b = Expr('Bear')
 d = Expr('Dangerous')
 t = Expr('Teddies')
@@ -108,7 +108,7 @@ RULES.append(t >> b) #teddies are bear
 RULES.append(t >> ~d) #teddies are not dangerous
 RULES.append(b >> h) #bears like honey
 RULES.append((t & f) >> d) #fat teddies are typically dangerous
-
+"""
 
 #####################   QUERYING   #####################
 #queries
@@ -116,7 +116,6 @@ QUERIES = []
 SENTS = []
 
 #from paper
-"""
 # 0-entailed
 QUERIES.append((b & p) >> f)
 SENTS.append('do penguin-birds fly?')
@@ -153,7 +152,6 @@ QUERIES.append(f >> b)
 SENTS.append('are flying animals birds?')
 QUERIES.append((c & p) >> f)
 SENTS.append('do Canadian penguins fly?')
-"""
 
 #for B1
 """
@@ -199,14 +197,14 @@ SENTS.append('is C on the table?')
 """
 
 #bear
-
+"""
 QUERIES.append((t & d & ~h) >> b)
 SENTS.append('are dangerous teddies that do not like honey typically bears?')
 QUERIES.append(t >> h)
 SENTS.append('do teddies like honey?')
 QUERIES.append(b >> f)
 SENTS.append('are bears typically fat?')
-
+"""
 
 #ENTAILMENTS
 zero_entail(RULES, QUERIES, SENTS)
