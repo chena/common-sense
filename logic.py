@@ -1,10 +1,9 @@
-"""Representations and Inference for Logic (Chapters 7-9, 12)
+"""Representations and Inference for Logic
 
 Covers both Propositional and First-Order Logic. First we have four
 important data types:
 
     KB            Abstract class holds a knowledge base of logical expressions
-    KB_Agent      Abstract class subclasses agents.Agent
     Expr          A logical expression
     substitution  Implemented as a dictionary of var:value pairs, {x:1, y:x}
 
@@ -25,7 +24,6 @@ And a few other functions:
 """
 
 import itertools, re
-import agents
 from utils import *
 from collections import defaultdict
 
@@ -707,7 +705,6 @@ def literal_symbol(literal):
         return literal
 
 #______________________________________________________________________________
-# Walk-SAT [Fig. 7.18]
 
 def WalkSAT(clauses, p=0.5, max_flips=10000):
     ## model is a random assignment of true/false to the symbols in clauses
@@ -727,16 +724,6 @@ def WalkSAT(clauses, p=0.5, max_flips=10000):
             ## Flip the symbol in clause that maximizes number of sat. clauses
             raise NotImplementedError
         model[sym] = not model[sym]
-
-#______________________________________________________________________________
-
-class HybridWumpusAgent(agents.Agent):
-    "An agent for the wumpus world that does logical inference. [Fig. 7.19]"""
-    def __init__(self):
-        unimplemented()
-
-def plan_route(current, goals, allowed):
-    unimplemented()
 
 #______________________________________________________________________________
 
@@ -1218,7 +1205,7 @@ def m_dec(itemset, alpha=[]):
    else:
       bin = ['0' if var.op=='~' else '1' for var in itemset]
    bin_str = ''.join(bin)
-   #convert from bin to dec number
+   # convert from bin to dec number
    dec = sum([2**(len(bin_str)-1-ind)*int(bin_str[ind]) for ind in range(len(bin_str))])
    return dec   
 
@@ -1229,7 +1216,7 @@ example:
 [a, ~b, c]
 """
 def model(vlist):
-   return [var if val else negation(var) for var,val in vlist] 
+   return [var if val else negation(var) for var, val in vlist] 
 
 """
 returns index of all possible combo of n-1 items from the itemset of size n (n CHOOSE n-1)
@@ -1249,34 +1236,14 @@ def choose(itemset):
 returns the negation of the given symbol
 """
 def negation(sym):
-   if sym.op=='~': return literal_symbol(sym)
+   if sym.op == '~': return literal_symbol(sym)
    return ~sym
 
 """
 returns the negation of the given set (as a list)
 """
 def neg_set(cset):
-   return [negation(c) for c in cset]
-
-"""
-from the given null-conjuntion, generate implication, place positive literal on rhs if possible
-"""
-def to_impl(conj):
-   disj = neg_set(conj)
-   flag = False
-   for d in disj:
-      if d.op!='~': #make this the rhs, the rest form the lhs
-	lhs,rhs= list(set(disj)-set([d])), d
-	flag = True
-        break
-   if not flag:
-      lhs,rhs= disj[1:],disj[0]
-   lhs = tuple(neg_set(lhs))
-   #if len(lhs)>1:
-   #   lhs = Expr('&', *lhs)
-   #else:
-      #lhs = lhs[0]
-   return (lhs,rhs)
+    return [negation(c) for c in cset]
 
 """
 given a list of lists, convert each symbol set from the list into literal symbol form (all positive)
@@ -1285,9 +1252,8 @@ example:
 [[a, b, c], [a, b]]
 """
 def literal_sym_set(itemset):
-   nitemset = [map(literal_symbol,item) for item in itemset]
-   return nitemset   
-
+   return [map(literal_symbol, item) for item in itemset]
+      
 """
 group the items according to their literal symbol (assuming in sorted order), returning a dictionary
 example:
@@ -1295,15 +1261,15 @@ example:
 [((a & c), [[a, c]]), ((a & b & c), [[~a, b, c], [a, b, c]]), ((a & b), [[~a, ~b]])]
 """
 def grouping(itemset):
-   itemset = filter(lambda a: type(a)==list and len(a)>1, itemset)
+   itemset = filter(lambda a: type(a) == list and len(a) > 1, itemset)
    groups = defaultdict(list)
    for item in itemset:
       #groups[Expr('&',*map(literal_symbol,sorted(item)))].append(item)
-      groups[tuple(map(literal_symbol,sorted(item)))].append(item)
+      groups[tuple(map(literal_symbol, sorted(item)))].append(item)
    return groups
 
 """
-remove duplicate items from a list while preserving the order (keeping the last occuring item)
+remove duplicate items from a list, keeping the last occuring item
 """
 def remove_dupp(mylist):
    return [x for i,x in enumerate(mylist) if x not in mylist[i+1:]]
